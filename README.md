@@ -1,2 +1,2 @@
-# react-refresher
-Brushing up on react concepts
+# react-sandbox
+Practicing react concepts
