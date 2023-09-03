@@ -1,4 +1,6 @@
 import { TodoList } from './TodoList';
+import { NameFunc } from './NameFunc';
+import { CheckBox } from './CheckBox';
 
 function App() {
 	// const myCustomLabel = <label htmlFor="inputId">Blah</label>;
@@ -15,6 +17,10 @@ function App() {
 		<div>
 			<h1>Todo List</h1>
 			<TodoList />
+			<NameFunc name="Bob" />
+			<CheckBox isChecked={true} labelText={'label Text'}>
+				What is this
+			</CheckBox>
 		</div>
 	);
 }
