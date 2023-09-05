@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Counter2 } from './Counter2';
 
 const INITIAL_VALUE = ['A', 'B', 'C'];
 
@@ -13,20 +14,20 @@ function App() {
 	}
 
 	function removeSpecificLetter(letter) {
-		setArray((prev) => {
-			return prev.filter((el) => el !== letter);
+		setArray((currentArray) => {
+			return currentArray.filter((el) => el !== letter);
 		});
 	}
 
 	function addLetterToStart(letter) {
-		setArray((prev) => {
-			return [letter, ...prev];
+		setArray((currentArray) => {
+			return [letter, ...currentArray];
 		});
 	}
 
 	function addLetterToEnd(letter) {
-		setArray((prev) => {
-			return [...prev, letter];
+		setArray((currentArray) => {
+			return [...currentArray, letter];
 		});
 	}
 
@@ -39,8 +40,8 @@ function App() {
 	}
 
 	function updateAToH() {
-		setArray((prev) => {
-			return prev.map((el) => {
+		setArray((currentArray) => {
+			return currentArray.map((el) => {
 				if (el === 'A') return 'H';
 				return el;
 			});
@@ -48,37 +49,46 @@ function App() {
 	}
 
 	function addLetterAtIndex(letter, index) {
-		setArray((prev) => {
-			return [...prev.slice(0, index), letter, ...prev.slice(index)];
+		setArray((currentArray) => {
+			return [
+				...currentArray.slice(0, index),
+				letter,
+				...currentArray.slice(index),
+			];
 		});
 	}
 
 	return (
-		<div>
-			{array.join(', ')}
-			<br />
-			<button onClick={removeFirstElement}>Remove First Element</button>
-			<br />
-			<button onClick={() => removeSpecificLetter('B')}>Remove All Bs</button>
-			<br />
-			<button onClick={() => addLetterToStart('B')}>Add to Start</button>
-			<br />
-			<button onClick={() => addLetterToEnd('Z')}>Add to End</button>
-			<br />
-			<button onClick={clear}>Clear</button>
-			<br />
-			<button onClick={reset}>Reset</button>
-			<br />
-			<button onClick={updateAToH}>updateAToH</button>
-			<br />
-			<button onClick={() => addLetterAtIndex('C', 2)}>Add C At 2</button>
-			<br />
-			<input value={value} onChange={(e) => setValue(e.target.value)} />
-			<br />
-			<button type="button" onClick={() => addLetterToStart(value)}>
-				Add Value To Array
-			</button>
-		</div>
+		<Counter2 />
+		// <div>
+		// 	<button onClick={removeFirstElement}>Remove First Element</button>
+		// 	<br />
+		// 	<button onClick={() => removeSpecificLetter('B')}>Remove All Bs</button>
+		// 	<br />
+		// 	<button onClick={() => addLetterToStart('B')}>Add To Start</button>
+		// 	<br />
+		// 	<button onClick={() => addLetterToEnd('Z')}>Add To End</button>
+		// 	<br />
+		// 	<button onClick={clear}>Clear</button>
+		// 	<br />
+		// 	<button onClick={reset}>Reset</button>
+		// 	<br />
+		// 	<button onClick={updateAToH}>Update A To H</button>
+		// 	<br />
+		// 	<button onClick={() => addLetterAtIndex('C', 2)}>Add C At 2</button>
+		// 	<br />
+		// 	<input
+		// 		type="text"
+		// 		value={value}
+		// 		onChange={(e) => setValue(e.target.value)}
+		// 	/>
+		// 	<br />
+		// 	<button onClick={() => addLetterToStart(value)}>
+		// 		Add Value To Array
+		// 	</button>
+		// 	<br />
+		// 	{array.join(', ')}
+		// </div>
 	);
 }
 
