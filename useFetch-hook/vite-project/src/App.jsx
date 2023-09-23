@@ -1,13 +1,16 @@
 import { useState } from 'react';
+import { useFetch } from './useFetch';
 
 const URLS = {
-	users: 1,
-	posts: 2,
-	comments: 3,
+	USERS: 'https://jsonplaceholder.typicode.com/users',
+	POSTS: 'https://jsonplaceholder.typicode.com/posts',
+	COMMENTS: 'https://jsonplaceholder.typicode.com/comments',
 };
 
 function App() {
-	const [url, setUrl] = useState(URLS.users);
+	const [url, setUrl] = useState(URLS.USERS);
+
+	const { data, isLoading, isError } = useFetch(url);
 
 	return (
 		<>
@@ -15,28 +18,35 @@ function App() {
 				<label>
 					<input
 						type="radio"
-						checked={url === URLS.users}
-						onChange={() => setUrl(URLS.users)}
+						checked={url === URLS.USERS}
+						onChange={() => setUrl(URLS.USERS)}
 					/>
 					Users
 				</label>
 				<label>
 					<input
 						type="radio"
-						checked={url === URLS.posts}
-						onChange={() => setUrl(URLS.posts)}
+						checked={url === URLS.POSTS}
+						onChange={() => setUrl(URLS.POSTS)}
 					/>
 					Posts
 				</label>
 				<label>
 					<input
 						type="radio"
-						checked={url === URLS.comments}
-						onChange={() => setUrl(URLS.comments)}
+						checked={url === URLS.COMMENTS}
+						onChange={() => setUrl(URLS.COMMENTS)}
 					/>
 					Comments
 				</label>
 			</div>
+			{isLoading ? (
+				<h1>Loading...</h1>
+			) : isError ? (
+				<h1>Error</h1>
+			) : (
+				<pre>{JSON.stringify(data, null, 2)}</pre>
+			)}
 		</>
 	);
 }
