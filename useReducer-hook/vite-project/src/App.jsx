@@ -1,34 +1,52 @@
 import * as React from 'react';
+import Slider from './Slider';
 
 function reducer(state, action) {
-	if (action === 'increment') {
-		return state + 1;
-	} else if (action === 'decrement') {
-		return state - 1;
-	} else if (action === 'reset') {
-		return 0;
+	if (action.type === 'increment') {
+		return {
+			count: state.count + state.step,
+			step: state.step,
+		};
+	} else if (action.type === 'decrement') {
+		return {
+			count: state.count - state.step,
+			step: state.step,
+		};
+	} else if (action.type === 'reset') {
+		return {
+			count: 0,
+			step: state.step,
+		};
+	} else if (action.type === 'updateStep') {
+		return {
+			count: state.count,
+			step: action.step,
+		};
 	} else {
 		throw new Error("This action type isn't supported.");
 	}
 }
 
-const initialState = 0;
-
 export default function Counter() {
-	const [count, dispatch] = React.useReducer(reducer, initialState);
+	const [state, dispatch] = React.useReducer(reducer, {
+		count: 0,
+		step: 1,
+	});
 
-	const handleIncrement = () => dispatch('increment');
-	const handleDecrement = () => dispatch('decrement');
-	const handleReset = () => dispatch('reset');
+	const handleIncrement = () => dispatch({ type: 'increment' });
+	const handleDecrement = () => dispatch({ type: 'decrement' });
+	const handleReset = () => dispatch({ type: 'reset' });
+	const handleUpdateStep = (step) => dispatch({ type: 'updateStep', step });
 
 	return (
 		<main>
-			<h1>{count}</h1>
+			<h1>{state.count}</h1>
 			<div>
 				<button onClick={handleDecrement}>-</button>
 				<button onClick={handleIncrement}>+</button>
 				<button onClick={handleReset}>0</button>
 			</div>
+			<Slider min={1} max={10} onChange={handleUpdateStep} />
 		</main>
 	);
 }
